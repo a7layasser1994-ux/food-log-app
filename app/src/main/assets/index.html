@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>سجل أكلي</title>
+<style>
+:root{--bg:#eef1f5;--card:#fff;--tx:#14202b;--mu:#667585;--ln:#dde3ea;--ac:#3a4fd6;--ac2:#e6e9fb;--onac:#fff;--bad:#d23b3b;--p:#e4572e;--c:#e0a100;--f:#1b998b;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f141b;--card:#171e27;--tx:#e8edf3;--mu:#92a0ae;--ln:#27313c;--ac:#93a4ff;--ac2:#202a52;--onac:#0b1130;--bad:#ff7b7b;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f141b;--card:#171e27;--tx:#e8edf3;--mu:#92a0ae;--ln:#27313c;--ac:#93a4ff;--ac2:#202a52;--onac:#0b1130;--bad:#ff7b7b;color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 Cairo,Tahoma,"Segoe UI",sans-serif;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+input,select,textarea{font:inherit;color:var(--tx);background:var(--bg);border:1.5px solid var(--ln);border-radius:12px;padding:11px 12px;width:100%}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
+h2{font-size:22px;margin:6px 0 12px}
+i{font-style:normal}
+#app{max-width:560px;margin:0 auto;padding:10px 14px 160px}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:18px;padding:14px;margin-bottom:12px}
+.mu{color:var(--mu)}.c{text-align:center}.bad{color:var(--bad)}
+small{display:block;color:var(--mu);font-size:13px;line-height:1.4}
+label{display:block;font-size:14px;color:var(--mu);margin-top:10px}
+label input,label select{margin-top:4px;color:var(--tx)}
+.ib{width:44px;height:44px;border-radius:50%;font-size:22px;flex:none}
+.dbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.dbar b{font-size:19px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.g3 b{display:block;font-size:14px;margin:2px 0 6px}
+.bar{height:7px;background:var(--ln);border-radius:9px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;border-radius:9px;background:var(--ac)}
+.mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}
+.row{display:flex;width:100%;justify-content:space-between;align-items:center;gap:10px;text-align:start;padding:10px 2px;border-top:1px solid var(--ln);min-height:52px}
+.row .grow,.grow{flex:1;text-align:start}
+.row b{font-weight:600}
+.act{display:flex;gap:16px;border-top:1px solid var(--ln);padding-top:6px}
+.lnk{color:var(--ac);font-weight:600;padding:8px 0;min-height:40px}
+.btn{display:block;width:100%;padding:14px;border-radius:14px;background:var(--ac);color:var(--onac);font-weight:700;margin-top:12px;text-align:center}
+.btn.ghost{background:none;border:1.5px solid var(--ln);color:var(--tx)}
+.btn.bad{color:var(--bad)}
+nav{position:fixed;inset:auto 0 0 0;display:flex;background:var(--card);border-top:1px solid var(--ln);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));z-index:20}
+nav button{flex:1;display:flex;flex-direction:column;align-items:center;font-size:12px;color:var(--mu);padding:4px;min-height:48px}
+nav button span{font-size:20px;line-height:1.3}
+nav .on{color:var(--ac);font-weight:700}
+.seg{display:flex;background:var(--bg);border-radius:12px;padding:3px;margin-bottom:10px}
+.seg button{flex:1;padding:9px 4px;border-radius:10px;font-size:15px}
+.seg .on{background:var(--card);box-shadow:0 1px 3px #0003;font-weight:700}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.ch,.mc{padding:8px 14px;border-radius:99px;border:1.5px solid var(--ln);min-height:40px}
+.ch.on,.mc.on{background:var(--ac2);border-color:var(--ac);color:var(--ac);font-weight:600}
+.qrow{display:flex;gap:10px;align-items:center;margin-top:6px}
+.qrow span{white-space:nowrap;font-size:18px}
+.big{font-size:28px;font-weight:700;text-align:center}
+.pvb{background:var(--ac2);border-radius:14px;padding:12px;text-align:center;margin-top:6px}
+.pvb b{font-size:22px;display:block}
+.big2{font-size:30px}
+#sh{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center}
+.bd{position:absolute;inset:0;background:#0008}
+.pn{position:relative;background:var(--card);width:100%;max-width:560px;max-height:90%;overflow:auto;border-radius:22px 22px 0 0;padding:12px 16px calc(18px + env(safe-area-inset-bottom,0px))}
+.sh{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.sh h3{flex:1;margin:0;font-size:18px}
+#ts{position:fixed;inset-inline:16px;bottom:calc(90px + env(safe-area-inset-bottom,0px));max-width:420px;margin:auto;background:var(--tx);color:var(--bg);padding:12px 16px;border-radius:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;z-index:60}
+#ts button{font-weight:700;text-decoration:underline}
+textarea{min-height:120px;direction:ltr;font-size:13px}
+.sum{display:grid;grid-template-columns:auto repeat(4,1fr);gap:8px 6px;align-items:center;text-align:center;cursor:pointer}
+.sum>small{text-align:start;white-space:nowrap;padding-inline-end:6px}
+.sum .ch2{font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:4px}
+.ch2 i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.sum .rm{background:var(--ac2);border-radius:10px;padding:6px 0;font-size:17px}
+.sum .rm.bad{background:none;border:1.5px solid var(--bad)}
+.sum .rl{color:var(--tx);font-weight:700}
+.sum .bar{margin:0}
+.sum .ft{grid-column:1/-1;text-align:center;font-size:12px}
+.note{display:flex;justify-content:space-between;align-items:center;background:var(--ac2);border-radius:12px;padding:2px 14px;margin-bottom:10px;font-size:14px}
+.mt{text-align:start;min-height:44px;font-size:17px}
+.dbar .lnk{display:block;margin:0 auto}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="ts" hidden></div>
+<div id="sh" hidden><div class="bd" data-a="closesh"></div><div class="pn" id="shb"></div></div>
+<nav>
+<button data-a="go" data-v="today"><span>📅</span>اليوم</button>
+<button data-a="go" data-v="foods"><span>🍽️</span>أكلي</button>
+<button data-a="go" data-v="hist"><span>📊</span>السجل</button>
+<button data-a="go" data-v="set"><span>⚙️</span>الإعدادات</button>
+</nav>
+<script>
+const $=s=>document.querySelector(s);
+const KEY='akl_v1',UNITS=['جرام','مل','حبة','ملعقة','كوب','طبق','رغيف','شريحة'];
+
+const blank=()=>({foods:[],combos:[],days:{},target:{k:0,p:0,c:0,f:0},lastBackup:0,created:Date.now()});
+let S,mem=false,corrupt=false,view='today',sh=null,undoFn=null,tt,fq='',ftab='f';
+const dk=d=>{const z=new Date(d.getTime()-d.getTimezoneOffset()*6e4);return z.toISOString().slice(0,10)};
+let date=dk(new Date());
+const nz=s=>String(s).toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').replace(/[٠-٩]/g,c=>c.charCodeAt(0)-1632);
+function norm(){const b=blank();if(!S||typeof S!=='object')S=b;S=Object.assign(b,S);
+ if(!Array.isArray(S.foods))S.foods=[];if(!Array.isArray(S.combos))S.combos=[];
+ if(!S.days||typeof S.days!=='object'||Array.isArray(S.days))S.days={};
+ if(!S.target||typeof S.target!=='object')S.target=blank().target;
+ const LG={b:'فطار',l:'غداء',d:'عشاء',s:'سناك'};
+ for(const k in S.days){const d=S.days[k];if(!d||!Array.isArray(d.e)){S.days[k]={e:[],m:[]};continue}
+  if(!Array.isArray(d.m)){d.m=[];['b','l','d','s'].forEach(id=>{if(d.e.some(x=>x.meal===id))d.m.push({id,n:LG[id]})})}}}
+try{const r=localStorage.getItem(KEY);if(r){try{S=JSON.parse(r)}catch(e){corrupt=true;try{localStorage.setItem(KEY+'_corrupt',r)}catch(_){}}}}catch(e){mem=true}
+norm();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){mem=true}}
+const N=v=>{v=parseFloat(String(v).replace(/[٠-٩]/g,c=>c.charCodeAt(0)-1632).replace('٫','.').replace(',','.'));return isFinite(v)&&v>0?v:0};
+const r1=x=>Math.round(x*10)/10;
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-3);
+const food=id=>S.foods.find(f=>f.id===id);
+const getDay=k=>S.days[k]||{e:[],m:[]};
+const dayW=k=>S.days[k]||(S.days[k]={e:[],m:[]});
+const sum=e=>e.reduce((a,x)=>({k:a.k+x.k,p:a.p+x.p,c:a.c+x.c,f:a.f+x.f}),{k:0,p:0,c:0,f:0});
+const lab=k=>new Date(k+'T12:00:00').toLocaleDateString('ar-EG-u-nu-latn',{weekday:'long',day:'numeric',month:'long'});
+
+const shift=(k,n)=>{const x=new Date(k+'T12:00:00');x.setDate(x.getDate()+n);return dk(x)};
+
+function toast(m,u){const el=$('#ts');el.innerHTML='<span>'+esc(m)+'</span>'+(u?'<button data-a="undo">تراجع</button>':'');el.hidden=false;undoFn=u||null;clearTimeout(tt);tt=setTimeout(()=>{el.hidden=true},u?6000:2200)}
+
+/* ---------- views ---------- */
+const COLS=[['k','سعرات','--ac'],['p','بروتين','--p'],['c','كارب','--c'],['f','دهون','--f']];
+function summary(t,s){
+ const fm=(k,v)=>k==='k'?Math.round(v):r1(v);
+ const head=COLS.map(([k,n,c])=>`<b class="ch2"><i style="background:var(${c})"></i>${n}</b>`).join('');
+ const need=COLS.map(([k])=>`<span>${t[k]?fm(k,t[k]):'—'}</span>`).join('');
+ const ate=COLS.map(([k])=>`<span><b>${fm(k,s[k])}</b></span>`).join('');
+ const rem=COLS.map(([k])=>{const r=t[k]-s[k];return t[k]?`<span class="rm ${r<0?'bad':''}"><b>${r<0?'+'+fm(k,-r):fm(k,r)}</b></span>`:'<span class="rm">—</span>'}).join('');
+ const bars=COLS.map(([k,n,c])=>`<span class="bar"><i style="width:${t[k]?Math.min(100,s[k]/t[k]*100):0}%;background:${t[k]&&s[k]>t[k]?'var(--bad)':'var('+c+')'}"></i></span>`).join('');
+ const over=COLS.some(([k])=>t[k]&&s[k]>t[k]);
+ return `<div class="card sum" data-a="tgt"><span></span>${head}<small>الاحتياج</small>${need}<small>اتاكل</small>${ate}<small class="rl">الباقي</small>${rem}<span></span>${bars}<small class="ft${over?' bad':''}">${over?'الأحمر (+) = زيادة عن الاحتياج. ':''}اضغط لتعديل احتياج اليوم ده</small></div>`}
+
+function vToday(){
+ const d=getDay(date),t=d.t||S.target,s=sum(d.e),isT=date===dk(new Date()),hasT=t.k||t.p||t.c||t.f;
+ let h=`<div class="dbar"><button class="ib" data-a="day" data-d="-1" aria-label="اليوم اللي قبله">›</button><div class="c"><b>${isT?'النهاردة':lab(date)}</b>${isT?`<small>${lab(date)}</small>`:'<button class="lnk" data-a="today">ارجع للنهاردة</button>'}</div><button class="ib" data-a="day" data-d="1" aria-label="اليوم اللي بعده">‹</button></div>`;
+ if(corrupt)h+=`<div class="card bad">لقيت بيانات تالفة على الجهاز واتحفظت نسخة منها على جنب. الأداة بدأت فاضية.</div>`;
+ if(mem)h+=`<div class="card bad">المتصفح مش بيسمح بالحفظ هنا، والبيانات هتضيع لما تقفل الصفحة.</div>`;
+ else if(S.foods.length>=3&&Date.now()-(S.lastBackup||S.created)>14*864e5)h+=`<div class="note"><span>خد نسخة احتياطية لبياناتك</span><button class="lnk" data-a="export">نسخ دلوقتي</button></div>`;
+ if(!hasT)h+=`<div class="note"><span>حدد احتياجك اليومي عشان يظهر الباقي</span><button class="lnk" data-a="go" data-v="set">حدد</button></div>`;
+ h+=summary(t,s)+`<button class="btn" data-a="nm" style="margin-bottom:14px">+ وجبة جديدة</button>`;
+ const ms=d.m.slice(),orph=e=>!d.m.find(m=>m.id===e.meal);
+ if(d.e.some(orph))ms.push({id:'_',n:'أخرى'});
+ if(!ms.length){h+=`<div class="card c"><p class="mu" style="margin:4px 0 10px">لسه مفيش وجبات في اليوم ده. اضغط "+ وجبة جديدة" وسمّيها زي ما تحب.</p>`;
+  if(getDay(shift(date,-1)).e.length)h+=`<button class="btn ghost" data-a="copyy" style="margin:0">انسخ أكل اليوم اللي قبله</button>`;h+='</div>'}
+ ms.forEach(m=>{const L=d.e.filter(e=>m.id==='_'?orph(e):e.meal===m.id),own=m.id!=='_';
+  h+=`<div class="card"><div class="mh">${own?`<button class="grow mt" data-a="mealm" data-m="${m.id}"><b>${esc(m.n)}</b> ✎</button>`:`<b>${esc(m.n)}</b>`}<span class="mu">${Math.round(sum(L).k)} سعرة</span></div>`+
+  (L.length?L.map(e=>`<button class="row" data-a="ent" data-id="${e.id}"><span class="grow"><b>${esc(e.n)}</b><small>${r1(e.q)} ${esc(e.u)} · ب${r1(e.p)} ك${r1(e.c)} د${r1(e.f)}</small></span><span>${Math.round(e.k)}</span></button>`).join(''):'<p class="mu c" style="margin:6px 0">لسه فاضية. ضيف أصناف.</p>')+
+  (own?`<div class="act"><button class="lnk" data-a="addm" data-m="${m.id}">+ أضف صنف</button>${L.length>1?`<button class="lnk" data-a="cbs" data-m="${m.id}">احفظها كوجبة جاهزة</button>`:''}</div>`:'')+`</div>`});
+ return h}
+
+function listHTML(q,mode,tab){q=nz(q.trim());
+ if(tab==='c'){const L=S.combos.filter(c=>nz(c.n).includes(q));
+  return L.length?L.map(c=>`<div class="row"><button class="grow" data-a="${mode==='pick'?'pcb':'cbinfo'}" data-id="${c.id}"><b>${esc(c.n)}</b><small>${c.it.length} أصناف · ${Math.round(c.it.reduce((a,x)=>a+x.k,0))} سعرة</small></button>${mode==='pick'?'<i>+</i>':`<button class="ib bad" data-a="delcb" data-id="${c.id}" aria-label="حذف">🗑</button>`}</div>`).join(''):`<p class="mu c">مفيش وجبات جاهزة لسه. من شاشة اليوم اضغط "احفظها كوجبة جاهزة" على أي وجبة.</p>`}
+ const L=S.foods.filter(f=>nz(f.n).includes(q)).sort((a,b)=>(b.last||0)-(a.last||0)||a.n.localeCompare(b.n,'ar'));
+ return L.length?L.map(f=>`<button class="row" data-a="${mode==='pick'?'pick':'editf'}" data-id="${f.id}"><span class="grow"><b>${esc(f.n)}</b><small>لكل ${r1(f.b)} ${esc(f.u)}: ${r1(f.k)} سعرة · ب${r1(f.p)} ك${r1(f.c)} د${r1(f.f)}</small></span><i>${mode==='pick'?'+':'‹'}</i></button>`).join(''):`<p class="mu c">${S.foods.length?'مفيش نتيجة بالاسم ده.':'لسه مفيش أصناف. ضيف أول صنف.'}</p>`}
+
+function vFoods(){return `<h2>أكلي</h2><div class="seg"><button class="${ftab==='f'?'on':''}" data-a="ftab" data-v="f">أصناف (${S.foods.length})</button><button class="${ftab==='c'?'on':''}" data-a="ftab" data-v="c">وجبات جاهزة (${S.combos.length})</button></div><input id="fsrch" placeholder="ابحث بالاسم" value="${esc(fq)}"><div id="fl2" class="card" style="margin-top:10px">${listHTML(fq,'edit',ftab)}</div>${ftab==='f'?'<button class="btn" data-a="newf">+ صنف جديد</button>':''}`}
+
+function vHist(){
+ const ks=Object.keys(S.days).filter(k=>S.days[k].e.length).sort().reverse().slice(0,60),now=Date.now();
+ const rec=ks.filter(k=>now-new Date(k+'T12:00:00')<7*864e5),avg=rec.length?rec.reduce((a,k)=>a+sum(S.days[k].e).k,0)/rec.length:0;
+ return `<h2>السجل</h2>${rec.length?`<div class="card c"><small>متوسط آخر 7 أيام (الأيام اللي سجلتها)</small><b class="big2">${Math.round(avg)}</b> <span class="mu">سعرة في اليوم</span></div>`:''}<div class="card">${ks.length?ks.map(k=>{const s=sum(S.days[k].e),t=S.days[k].t||S.target,ov=t.k&&s.k>t.k;
+  return `<button class="row" data-a="gd" data-k="${k}"><span class="grow"><b>${lab(k)}</b><div class="bar"><i style="width:${t.k?Math.min(100,s.k/t.k*100):0}%;background:${ov?'var(--bad)':'var(--ac)'}"></i></div></span><span class="${ov?'bad':''}">${Math.round(s.k)}${t.k?' / '+Math.round(t.k):''}</span></button>`}).join(''):'<p class="mu c">لسه ما سجلتش أي يوم. أول وجبة تسجلها هتظهر هنا.</p>'}</div>`}
+
+const tfields=t=>`<div class="g2">${[['k','سعرات','سعرة'],['p','بروتين','جم'],['c','كارب','جم'],['f','دهون','جم']].map(([k,n,u])=>`<label>${n} (${u})<input id="t_${k}" inputmode="decimal" value="${t[k]||''}"></label>`).join('')}</div>`;
+const rt=()=>({k:N($('#t_k').value),p:N($('#t_p').value),c:N($('#t_c').value),f:N($('#t_f').value)});
+
+function vSet(){const b=S.lastBackup;return `<h2>الإعدادات</h2><div class="card"><b>الاحتياج اليومي الافتراضي</b><small>بيتطبق على كل الأيام. وتقدر تعدّل يوم بعينه من شاشة اليوم. سيب أي خانة فاضية لو مش عايز تتابعها.</small>${tfields(S.target)}<button class="btn" data-a="savedef">حفظ</button></div><div class="card"><b>نسخة احتياطية</b><small>${b?'آخر نسخة: '+new Date(b).toLocaleDateString('ar-EG-u-nu-latn'):'لسه ما خدتش نسخة.'} خدها من وقت للتاني، وخاصة قبل ما تغيّر الموبايل.</small><button class="btn" data-a="export">تصدير نسخة احتياطية</button><button class="btn ghost" data-a="imps">استرجاع من نسخة</button></div><div class="card"><button class="btn ghost bad" style="margin:0" data-a="rsts">مسح كل البيانات</button></div><p class="mu c">بياناتك محفوظة على موبايلك بس.</p>`}
+
+/* ---------- sheets ---------- */
+const hdr=(t,back)=>`<div class="sh">${back?`<button class="ib" data-a="${back}" aria-label="رجوع">›</button>`:''}<h3>${t}</h3><button class="ib" data-a="closesh" aria-label="إغلاق">✕</button></div>`;
+const mealName=id=>(getDay(date).m.find(m=>m.id===id)||{n:''}).n;
+const chips=()=>`<div class="chips">${getDay(date).m.map(m=>`<button class="mc ${sh.meal===m.id?'on':''}" data-a="setmeal" data-m="${m.id}">${esc(m.n)}</button>`).join('')}</div>`;
+const sNm=()=>`${hdr('وجبة جديدة')}<label>اسم الوجبة<input id="mn" placeholder="مثلاً: بعد التمرين"></label><div class="chips">${['فطار','غداء','عشاء','سناك'].map(n=>`<button class="ch" data-a="mnfill" data-v="${n}">${n}</button>`).join('')}</div><button class="btn" data-a="mknew">إنشاء وإضافة أصناف</button>`;
+const sMeal=()=>{const m=getDay(date).m.find(x=>x.id===sh.id);return `${hdr('تعديل الوجبة')}<label>اسم الوجبة<input id="mn" value="${esc(m.n)}"></label><button class="btn" data-a="savemeal">حفظ الاسم</button><button class="btn ghost bad" data-a="delmeal">حذف الوجبة وأصنافها من اليوم</button>`};
+const sPick=()=>`${hdr('أضف إلى: '+esc(mealName(sh.meal)))}<div class="seg"><button class="${sh.tab==='f'?'on':''}" data-a="stab" data-v="f">أصنافي</button><button class="${sh.tab==='c'?'on':''}" data-a="stab" data-v="c">وجبات جاهزة</button></div><input id="srch" placeholder="ابحث بالاسم"><div id="fl">${listHTML('','pick',sh.tab)}</div>${sh.tab==='f'?'<button class="btn" data-a="newfp">+ صنف جديد</button>':''}`;
+const sQty=()=>{const f=food(sh.fid);return `${hdr(esc(f.n),'toPick')}<div class="qrow"><input id="q" class="big" inputmode="decimal" value="${r1(sh.qty)}"><span>${esc(f.u)}</span></div><div class="chips">${[.5,1,1.5,2,3].map(m=>`<button class="ch" data-a="qset" data-v="${r1(f.b*m)}">${r1(f.b*m)}</button>`).join('')}</div><div id="pv"></div><button class="btn" data-a="add">أضف لليوم</button>`};
+const sFood=()=>{const f=sh.fid?food(sh.fid):{n:'',u:'جرام',b:100,k:'',p:'',c:'',f:''};
+ return `${hdr(sh.fid?'تعديل صنف':'صنف جديد',sh.back)}<label>اسم الأكلة<input id="f_n" value="${esc(f.n)}" placeholder="مثلاً: رز أبيض مسلوق"></label><div class="g2"><label>القيم دي لكام؟<input id="f_b" inputmode="decimal" value="${f.b}"></label><label>الوحدة<select id="f_u">${UNITS.map(u=>`<option${u===f.u?' selected':''}>${u}</option>`).join('')}</select></label></div><div class="g2"><label>سعرات<input id="f_k" inputmode="decimal" value="${f.k||''}"></label><label>بروتين (جم)<input id="f_p" inputmode="decimal" value="${f.p||''}"></label><label>كارب (جم)<input id="f_c" inputmode="decimal" value="${f.c||''}"></label><label>دهون (جم)<input id="f_f" inputmode="decimal" value="${f.f||''}"></label></div><button class="btn" data-a="savefood">حفظ</button>${sh.fid?'<button class="btn ghost bad" data-a="delfood">حذف الصنف</button>':''}`};
+const curEnt=()=>getDay(date).e.find(e=>e.id===sh.id);
+const sEnt=()=>{const x=curEnt();return `${hdr(esc(x.n))}${chips()}<div class="qrow"><input id="q" class="big" inputmode="decimal" value="${r1(x.q)}"><span>${esc(x.u)}</span></div><p class="mu c">${Math.round(x.k)} سعرة حالياً</p><button class="btn" data-a="saveent">حفظ التعديل</button><button class="btn ghost bad" data-a="delent">حذف من اليوم</button>`};
+const sTgt=()=>`${hdr('احتياج اليوم ده')}<small>التعديل ده لليوم ده بس. الافتراضي بتغيّره من الإعدادات.</small>${tfields(getDay(date).t||S.target)}<button class="btn" data-a="savetgt">حفظ لليوم ده</button>${getDay(date).t?'<button class="btn ghost" data-a="rsttgt">رجّع للافتراضي</button>':''}`;
+const sCb=()=>`${hdr('احفظ كوجبة جاهزة')}<label>اسم الوجبة<input id="cn" placeholder="مثلاً: فطاري المعتاد"></label><button class="btn" data-a="savecb">حفظ</button>`;
+const sBk=()=>`${hdr('النسخة الاحتياطية')}<small>مقدرتش أحفظ الملف تلقائي. انسخ النص ده واحفظه في ملاحظات أو ابعته لنفسك. لما تحب ترجّعه استخدم "استرجاع من نسخة".</small><textarea id="bkt" readonly>${esc(sh.txt)}</textarea><button class="btn" data-a="sel">انسخ النص</button>`;
+const sImp=()=>`${hdr('استرجاع من نسخة')}<small>اختار ملف النسخة أو الصق النص. الاسترجاع بيستبدل البيانات الحالية.</small><label>ملف النسخة<input id="fi" type="file" accept=".json,application/json"></label><label>أو الصق النص هنا<textarea id="imt"></textarea></label><button class="btn" data-a="doimp">استبدل بياناتي بالنسخة</button>`;
+const sRst=()=>`${hdr('مسح كل البيانات')}<p>هتتمسح كل الأصناف والوجبات وسجل الأيام، ومفيش رجوع. لو مش متأكد خد نسخة احتياطية الأول.</p><button class="btn ghost bad" data-a="doreset">امسح كل حاجة</button><button class="btn" data-a="closesh">إلغاء</button>`;
+
+function pv(){const f=sh.fid&&food(sh.fid),el=$('#pv');if(!f||!el)return;
+ const m=N($('#q').value)/f.b,v={k:f.k*m,p:f.p*m,c:f.c*m,f:f.f*m},d=getDay(date),t=d.t||S.target,af=t.k-sum(d.e).k-v.k;
+ el.innerHTML=`<div class="pvb"><b>${Math.round(v.k)} سعرة</b><span>ب ${r1(v.p)} · ك ${r1(v.c)} · د ${r1(v.f)}</span>${t.k?`<small class="${af<0?'bad':''}">${af<0?'هتعدّي الاحتياج بـ '+Math.round(-af)+' سعرة':'هيفضلك '+Math.round(af)+' سعرة'}</small>`:''}</div>`}
+
+function renderSheet(){const el=$('#sh');
+ if(!sh){el.hidden=true;document.body.style.overflow='';return}
+ el.hidden=false;document.body.style.overflow='hidden';
+ $('#shb').innerHTML=({pick:sPick,qty:sQty,food:sFood,ent:sEnt,tgt:sTgt,cb:sCb,bk:sBk,imp:sImp,rst:sRst,nm:sNm,meal:sMeal})[sh.m]();
+ if(sh.m==='qty'){pv();const q=$('#q');q.focus();q.select()}else if(sh.m==='nm'||sh.m==='meal')$('#mn').focus()}
+
+function render(){
+ $('#app').innerHTML=({today:vToday,foods:vFoods,hist:vHist,set:vSet})[view]();
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===view));
+ renderSheet()}
+
+/* ---------- actions ---------- */
+const A={};
+A.go=d=>{view=d.v;window.scrollTo(0,0);render()};
+A.day=d=>{date=shift(date,+d.d);render()};
+A.today=()=>{date=dk(new Date());render()};
+A.gd=d=>{date=d.k;view='today';window.scrollTo(0,0);render()};
+A.closesh=()=>{sh=null;renderSheet()};
+A.undo=()=>{if(undoFn)undoFn();undoFn=null;$('#ts').hidden=true};
+A.addm=d=>{sh={m:'pick',meal:d.m,tab:'f'};renderSheet()};
+A.toPick=()=>{sh={m:'pick',meal:sh.meal,tab:'f'};renderSheet()};
+A.stab=d=>{sh.tab=d.v;renderSheet()};
+A.setmeal=d=>{sh.meal=d.m;document.querySelectorAll('.mc').forEach(b=>b.classList.toggle('on',b.dataset.m===d.m))};
+A.pick=d=>{const f=food(d.id);sh={m:'qty',meal:sh.meal,fid:f.id,qty:f.lq||f.b};renderSheet()};
+A.qset=d=>{$('#q').value=d.v;pv()};
+A.add=()=>{const f=food(sh.fid),q=N($('#q').value);if(!q){toast('اكتب الكمية');return}
+ const m=q/f.b;dayW(date).e.push({id:uid(),meal:sh.meal,fid:f.id,n:f.n,u:f.u,q,k:f.k*m,p:f.p*m,c:f.c*m,f:f.f*m});
+ f.last=Date.now();f.lq=q;save();sh=null;render();toast('اتضافت '+f.n)};
+A.pcb=d=>{const c=S.combos.find(x=>x.id===d.id),meal=sh.meal;c.it.forEach(x=>dayW(date).e.push({...x,id:uid(),meal}));save();sh=null;render();toast('اتضافت '+c.n)};
+A.cbinfo=d=>{const c=S.combos.find(x=>x.id===d.id);toast(c.it.map(x=>x.n).join('، '))};
+A.delcb=d=>{const i=S.combos.findIndex(x=>x.id===d.id),c=S.combos[i];S.combos.splice(i,1);save();render();toast('اتحذفت '+c.n,()=>{S.combos.splice(i,0,c);save();render()})};
+A.cbs=d=>{sh={m:'cb',meal:d.m};renderSheet()};
+A.savecb=()=>{const n=$('#cn').value.trim();if(!n){toast('اكتب اسم الوجبة');return}
+ const it=getDay(date).e.filter(e=>e.meal===sh.meal).map(({id,meal,...r})=>r);
+ S.combos.push({id:uid(),n,it});save();sh=null;render();toast('اتحفظت وجبة «'+n+'»')};
+A.copyy=()=>{const p=getDay(shift(date,-1)),d=dayW(date);p.m.forEach(m=>{if(!d.m.find(x=>x.id===m.id))d.m.push({...m})});p.e.forEach(e=>d.e.push({...e,id:uid()}));save();render();toast('اتنسخ أكل اليوم اللي قبله')};
+A.ent=d=>{const x=getDay(date).e.find(e=>e.id===d.id);sh={m:'ent',id:d.id,meal:x.meal};renderSheet()};
+A.saveent=()=>{const x=curEnt(),q=N($('#q').value);if(!q){toast('اكتب الكمية');return}
+ const m=q/x.q;x.k*=m;x.p*=m;x.c*=m;x.f*=m;x.q=q;x.meal=sh.meal;save();sh=null;render()};
+A.delent=()=>{const L=dayW(date).e,i=L.findIndex(e=>e.id===sh.id),x=L[i];L.splice(i,1);save();sh=null;render();toast('اتحذفت '+x.n,()=>{L.splice(i,0,x);save();render()})};
+A.ftab=d=>{ftab=d.v;fq='';render()};
+A.newf=()=>{sh={m:'food',back:'closesh'};renderSheet()};
+A.newfp=()=>{sh={m:'food',meal:sh.meal,then:'qty',back:'toPick'};renderSheet()};
+A.editf=d=>{sh={m:'food',fid:d.id,back:'closesh'};renderSheet()};
+A.savefood=()=>{const n=$('#f_n').value.trim(),b=N($('#f_b').value);if(!n||!b){toast('اكتب اسم الأكلة والكمية اللي القيم دي ليها');return}
+ if(S.foods.some(x=>x.id!==sh.fid&&nz(x.n)===nz(n))){toast('فيه صنف بنفس الاسم. غيّر الاسم أو عدّل الصنف الموجود');return}
+ const o={n,u:$('#f_u').value,b,k:N($('#f_k').value),p:N($('#f_p').value),c:N($('#f_c').value),f:N($('#f_f').value)};
+ if(!o.k&&!sh.warned){sh.warned=true;toast('السعرات فاضية. اضغط حفظ تاني لو ده مقصود');return}
+ let f;if(sh.fid){f=food(sh.fid);Object.assign(f,o)}else{f=Object.assign({id:uid()},o);S.foods.push(f)}
+ save();if(sh.then==='qty'){sh={m:'qty',meal:sh.meal,fid:f.id,qty:f.b}}else{sh=null;toast('اتحفظ')}render()};
+A.delfood=()=>{const i=S.foods.findIndex(x=>x.id===sh.fid),f=S.foods[i];S.foods.splice(i,1);save();sh=null;render();toast('اتحذف '+f.n,()=>{S.foods.splice(i,0,f);save();render()})};
+A.tgt=()=>{sh={m:'tgt'};renderSheet()};
+A.savetgt=()=>{dayW(date).t=rt();save();sh=null;render()};
+A.rsttgt=()=>{if(S.days[date])delete S.days[date].t;save();sh=null;render()};
+A.savedef=()=>{S.target=rt();save();render();toast('اتحفظ الاحتياج')};
+A.export=async()=>{const data=JSON.stringify(S),filename='akl-backup-'+dk(new Date())+'.json';
+ try{const dl=window.claude&&await claude.use('downloads');
+  if(dl){await dl.save({filename,data});S.lastBackup=Date.now();save();render();toast('تم حفظ النسخة');return}}
+ catch(e){if(e&&e.code==='declined')return}
+ sh={m:'bk',txt:data};renderSheet()};
+A.sel=()=>{const t=$('#bkt');t.focus();t.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}if(ok){S.lastBackup=Date.now();save();toast('اتنسخ. احفظه في مكان أمان')}else toast('النسخ التلقائي فشل. حدد النص بإيدك وانسخه')};
+A.imps=()=>{sh={m:'imp'};renderSheet()};
+A.doimp=()=>{try{const o=JSON.parse($('#imt').value);if(!o||!Array.isArray(o.foods)||!o.days||typeof o.days!=='object')throw 0;
+ S=o;norm();save();sh=null;view='today';render();toast('تم استرجاع بياناتك')}catch(e){toast('النسخة مش صالحة. اتأكد إنك نسخت النص كله')}};
+A.rsts=()=>{sh={m:'rst'};renderSheet()};
+A.doreset=()=>{S=blank();norm();save();sh=null;view='today';render();toast('اتمسحت البيانات')};
+
+A.nm=()=>{sh={m:'nm'};renderSheet()};
+A.mnfill=d=>{$('#mn').value=d.v;$('#mn').focus()};
+A.mknew=()=>{const n=$('#mn').value.trim();if(!n){toast('اكتب اسم الوجبة');return}const id=uid();dayW(date).m.push({id,n});save();sh={m:'pick',meal:id,tab:'f'};render()};
+A.mealm=d=>{sh={m:'meal',id:d.m};renderSheet()};
+A.savemeal=()=>{const n=$('#mn').value.trim();if(!n){toast('اكتب اسم الوجبة');return}getDay(date).m.find(x=>x.id===sh.id).n=n;save();sh=null;render()};
+A.delmeal=()=>{const d=dayW(date),mi=d.m.findIndex(x=>x.id===sh.id),m=d.m[mi],gone=d.e.filter(e=>e.meal===m.id);d.m.splice(mi,1);d.e=d.e.filter(e=>e.meal!==m.id);save();sh=null;render();toast('اتحذفت '+m.n,()=>{d.m.splice(mi,0,m);d.e.push(...gone);save();render()})};
+document.addEventListener('keydown',e=>{if(e.key!=='Enter'||!sh)return;const i=e.target.id;
+ if(i==='mn')sh.m==='nm'?A.mknew():A.savemeal();else if(i==='q')sh.m==='qty'?A.add():A.saveent()});
+document.addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(t&&A[t.dataset.a])A[t.dataset.a](t.dataset,t)});
+document.addEventListener('input',e=>{const t=e.target;
+ if(t.id==='q'&&sh&&sh.m==='qty')pv();
+ else if(t.id==='srch')$('#fl').innerHTML=listHTML(t.value,'pick',sh.tab);
+ else if(t.id==='fsrch'){fq=t.value;$('#fl2').innerHTML=listHTML(fq,'edit',ftab)}});
+document.addEventListener('change',e=>{const t=e.target;
+ if(t.id==='f_u'){const b=$('#f_b');if(['100','1',''].includes(b.value.trim()))b.value=(t.value==='جرام'||t.value==='مل')?100:1}
+ else if(t.id==='fi'&&t.files[0]){const r=new FileReader();r.onload=()=>{$('#imt').value=r.result;toast('اتقرا الملف. اضغط استبدل')};r.readAsText(t.files[0])}});
+
+render();
+</script>
+</body>
+</html>
